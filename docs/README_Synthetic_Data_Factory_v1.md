@@ -8,6 +8,16 @@
 - **LangGraph** – Workflow orchestration; GenAI used only for schema‑diff decisions  
 - **PostgreSQL** – Relational DB with schema‑versioned namespaces
 
+| Layer | Technology | Purpose |
+|---|---|---|
+| UI | Streamlit | Chat UI + human review + run controls |
+| API | FastAPI | Contract freeze + run orchestration endpoints |
+| Agentic schema/rules | CrewAI | Generate CMC/RPC proposals from chat |
+| Workflow orchestration | LangGraph | Deterministic pipeline execution |
+| Database (optional sink) | PostgreSQL | Store generated data when `sink="postgres"` |
+| Export sink | CSV artifacts | `artifacts/runs/<run_id>/csv/<table>.csv` for downstream tools |
+| Persistence | Filesystem artifacts | Frozen contracts, manifests, rows, QA reports |
+
 **Versioning policy:** **Every approved build creates a brand‑new Postgres schema** (e.g., `synthetic_0008`). Old versions remain immutable for lineage, reproducibility, and dataset rollbacks.
 
 ---
